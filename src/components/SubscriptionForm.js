@@ -4,7 +4,7 @@ import hitToast from '../helpers/hitToast';
 export default function SubscriptionForm() {
   let [email, setEmail] = useState('');
   let [alertClass, setAlertClass] = useState('');
-  var parentComp = useRef();
+  const parentComp = useRef(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +22,10 @@ export default function SubscriptionForm() {
     }).then(res => res.text())
       .then(data => JSON.parse(`${data}`))
       .then(data => hitToast(data.message, data.success ? 'success' : 'error'))
-      .catch(() => hitToast('Something went wrong. Please try again.', 'error'))
+      .catch((err) => {
+        console.log(err)
+        hitToast('Something went wrong. Please try again.', 'error')
+      })
 
     setAlertClass('');
   }

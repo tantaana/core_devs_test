@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import hitToast from '../helpers/hitToast';
 
-function SubscriptionForm() {
+export default function SubscriptionForm() {
   let [email, setEmail] = useState('');
   let [alertClass, setAlertClass] = useState('');
   var parentComp = useRef();
@@ -19,7 +19,7 @@ function SubscriptionForm() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email })
-    }).then(res => res.json())
+    }).then(res => res.text())
       .then(data => JSON.parse(`${data}`))
       .then(data => hitToast(data.message, data.success ? 'success' : 'error'))
       .catch(() => hitToast('Something went wrong. Please try again.', 'error'))
@@ -50,5 +50,3 @@ function SubscriptionForm() {
     </form>
   );
 }
-
-export default SubscriptionForm;
